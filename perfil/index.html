@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Perfil en Itervia</title>
+  <meta name="description" content="Los lugares que recomienda esta persona en Itervia.">
+  <meta name="apple-itunes-app" content="app-id=6758466804">
+  <meta name="theme-color" content="#966B9D">
+  <meta property="og:image" content="https://itervia.com.mx/assets/icon-512.png">
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap narrow">
+      <a class="mark" href="/"><img src="/assets/logo.png" alt="" width="34" height="34">Itervia</a>
+      <a class="btn btn-primary btn-small" href="/#descargar">Descargar</a>
+    </div>
+  </header>
+
+  <main class="wrap narrow">
+    <div id="demo-slot"></div>
+    <div id="profile" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    <div class="wrap narrow">
+      <nav aria-label="Legal y ayuda"><a href="/">Inicio</a><a href="/privacidad/">Aviso de privacidad</a><a href="/soporte/">Soporte</a></nav>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { profileByUsername, placesByCreator, placeTile, gateTile, skeletonTiles, avatar, el, openInstallSheet, stickyCTA, demoNotice, track } from '/assets/app.js';
+
+    const root = document.getElementById('profile');
+    const demo = demoNotice();
+    if (demo) document.getElementById('demo-slot').append(demo);
+    const username = new URLSearchParams(location.search).get('u');
+
+    const empty = (title, text) => root.replaceChildren(el('div', { class: 'empty' },
+      el('h1', {}, title), el('p', {}, text), el('a', { class: 'btn btn-primary', href: '/' }, 'Ver lugares')));
+
+    try {
+      const profile = await profileByUsername(username);
+      if (!profile) {
+        document.title = 'Perfil no encontrado · Itervia';
+        empty('No encontramos este perfil', 'Revisa el enlace o busca a la persona desde la app.');
+      } else {
+        const handle = profile.username;
+        document.title = `${profile.name || '@' + handle} (@${handle}) · Itervia`;
+        const isGuide = profile.role === 'guia';
+        const grid = el('div', { class: 'grid' }, skeletonTiles(6));
+        const followers = profile.followerscount ?? 0;
+        root.replaceChildren(
+          el('div', { class: 'profile' }, avatar(profile, 86),
+            el('div', {},
+              el('h1', {}, profile.name || `@${handle}`, isGuide ? el('span', { class: 'badge' }, 'GUÍA') : null),
+              el('div', { class: 'handle' }, `@${handle}`))),
+          el('div', { class: 'stats', id: 'stats' }),
+          el('div', { class: 'store-row', style: 'margin-bottom:22px' },
+            el('button', { class: 'btn btn-primary', type: 'button', onclick: () => openInstallSheet('follow') }, 'Seguir en la app')),
+          el('h2', { class: 'visually-hidden' }, 'Lugares recomendados'),
+          grid);
+        track('web_profile_open', { username: handle });
+        const places = await placesByCreator(profile.id, 9);
+        document.getElementById('stats').append(
+          el('div', {}, el('b', {}, String(places.length)), el('span', {}, 'Lugares')),
+          followers >= 10 ? el('div', {}, el('b', {}, followers.toLocaleString('es-MX')), el('span', {}, 'Seguidores')) : null);
+        grid.replaceChildren(...places.map(placeTile), gateTile(places.length ? 'Ve todo su perfil en la app' : 'Aún sin lugares públicos'));
+        stickyCTA(`@${handle} en Itervia`, isGuide ? 'Sigue sus recomendaciones en la app' : 'Ve su perfil completo en la app');
+      }
+    } catch (e) {
+      empty('No pudimos cargar el perfil', 'Revisa tu conexión e inténtalo de nuevo.');
+    }
+  </script>
+</body>
+</html>

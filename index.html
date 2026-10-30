@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    // site_url de Supabase Auth: si el correo regresa con tokens o código, se pasan a la app
+    // antes de pintar nada.
+    (function () {
+      var s = location.search, h = location.hash;
+      if (/(^|[?&#])(access_token|refresh_token|code|error|error_description|token_hash|type)=/.test(s + h)) {
+        location.replace('itervia://auth/callback' + s + h);
+      }
+    })();
+  </script>
+  <title>Itervia · ¿A dónde vamos?</title>
+  <meta name="description" content="Lugares curados en la Ciudad de México, ordenados por el plan que tienes en mente: una cita, trabajar, salir con amigos o un domingo en familia.">
+  <meta name="apple-itunes-app" content="app-id=6758466804">
+  <meta name="theme-color" content="#966B9D">
+  <meta property="og:title" content="Itervia · ¿A dónde vamos?">
+  <meta property="og:description" content="Pocos lugares, bien escogidos, y cada uno te dice para qué sirve.">
+  <meta property="og:image" content="https://itervia.com.mx/assets/icon-512.png">
+  <meta property="og:url" content="https://itervia.com.mx/">
+  <meta property="og:locale" content="es_MX">
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="mark" href="/"><img src="/assets/logo.png" alt="" width="34" height="34">Itervia</a>
+      <a class="btn btn-primary btn-small" href="#descargar">Descargar</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <span class="kicker">Ciudad de México</span>
+          <h1>¿A dónde <em>vamos</em>?</h1>
+          <p class="lead">Lugares curados, ordenados por el plan que tienes en mente. Cada uno te dice para qué sirve.</p>
+          <div class="store-row" id="hero-stores"></div>
+          <p class="fine">Gratis · Sin anuncios · Explora sin cuenta</p>
+        </div>
+        <div class="hero-card" id="hero-card" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div id="demo-slot"></div>
+        <h2>Lo más guardado esta semana</h2>
+        <p class="sub">Una probadita de lo que hay en Itervia. El resto, con mapa y "Cómo llegar", está en la app.</p>
+        <div class="grid" id="featured" aria-busy="true"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <h2>Decidir, en tres pasos</h2>
+        <div class="steps">
+          <div class="step"><span class="n">1</span><b>Piensa en el plan</b><p>Una primera cita, trabajar una tarde, un domingo en familia. No en la categoría del negocio.</p></div>
+          <div class="step"><span class="n">2</span><b>Mira pocos lugares</b><p>En Itervia no todo entra: cada lugar lo revisa una persona antes de publicarse.</p></div>
+          <div class="step"><span class="n">3</span><b>Guárdalo y ve</b><p>Precio, fotos reales, estacionamiento y cómo llegar desde donde estés.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="band">
+          <div>
+            <h2>Sigue a quien recomienda bien</h2>
+            <p>Los Guías de Itervia son personas cuyas recomendaciones se aprueban una y otra vez. Sube tus lugares desde la app: si encajan, se publican con tu nombre.</p>
+          </div>
+          <div><a class="btn btn-primary" href="#descargar">Quiero recomendar</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="descargar">
+      <div class="wrap narrow">
+        <h2>Descarga Itervia</h2>
+        <p class="sub">Gratis para iPhone. Android llega muy pronto.</p>
+        <div class="store-row" id="bottom-stores"></div>
+        <div class="promise">
+          <div>Sin anuncios<small>Ningún lugar paga por aparecer.</small></div>
+          <div>Sin rastreo de terceros<small>Medimos la app, no a ti fuera de ella.</small></div>
+          <div>Tus datos son tuyos<small>Borra tu cuenta desde la app cuando quieras.</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <nav aria-label="Legal y ayuda">
+        <a href="/privacidad/">Aviso de privacidad</a>
+        <a href="/soporte/">Soporte</a>
+        <a href="/eliminar-cuenta/">Eliminar cuenta</a>
+        <a href="mailto:soporte@itervia.com.mx">soporte@itervia.com.mx</a>
+      </nav>
+      <p>© 2026 Itervia · Hecho en la Ciudad de México</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { featuredPlaces, placeTile, gateTile, skeletonTiles, storeButtons, demoNotice, track } from '/assets/app.js';
+    import { renderPost } from '/assets/post.js';
+
+    document.getElementById('hero-stores').append(...storeButtons());
+    document.getElementById('bottom-stores').append(...storeButtons());
+    const demo = demoNotice();
+    if (demo) document.getElementById('demo-slot').append(demo);
+
+    const grid = document.getElementById('featured');
+    grid.append(...skeletonTiles(9));
+    track('web_home_open', {});
+    try {
+      const places = await featuredPlaces(8);
+      grid.replaceChildren(...places.map(placeTile), gateTile());
+      if (places[0]) document.getElementById('hero-card').append(await renderPost(places[0], { compact: true }));
+    } catch (e) {
+      grid.replaceChildren(gateTile('Ve los lugares en la app'));
+    }
+    grid.setAttribute('aria-busy', 'false');
+  </script>
+</body>
+</html>

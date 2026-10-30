@@ -1,0 +1,189 @@
+{
+ "_nota": "Solo para modo demo (sin anon key). Fotos de Unsplash; ver marketing/assets/creditos.tsv.",
+ "places": [
+  {
+   "id": "012acf22-b1b5-5b29-b13b-bbf2220ee20f",
+   "name": "Lago de Chapultepec",
+   "category": "Paseo",
+   "description": "Una lancha de remos al atardecer y la ciudad desaparece por un rato.",
+   "photos": [
+    "https://images.unsplash.com/photo-1735506943140-3309e78f3349?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1737001520309-d9648412be3d?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1591049290612-cded05bce25d?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "$",
+   "tags": [
+    "Romántico",
+    "Familiar",
+    "Instagrameable"
+   ],
+   "state": "Ciudad de México",
+   "city": "Miguel Hidalgo",
+   "municipality": "Miguel Hidalgo",
+   "likes": 61,
+   "saves_count": 184,
+   "created_by": "8b1f6c2e-0000-4000-8000-00000000d3e0",
+   "created_at": "2026-10-20T18:00:00Z"
+  },
+  {
+   "id": "6ad08fda-3fc4-59cc-826a-1697f580228c",
+   "name": "Trajineras en Xochimilco",
+   "category": "Paseo",
+   "description": "Canales, mariachi y elotes desde el agua. Al amanecer, desde Cuemanco, es otro plan: tranquilo y lleno de aves.",
+   "photos": [
+    "https://images.unsplash.com/photo-1721707408664-8a31b92994a5?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1637957422067-b2707a612160?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1722890957804-e501c7232d35?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "$$",
+   "tags": [
+    "Amigos",
+    "Animado",
+    "Familiar"
+   ],
+   "state": "Ciudad de México",
+   "city": "Xochimilco",
+   "municipality": "Xochimilco",
+   "likes": 40,
+   "saves_count": 152,
+   "created_by": "aaaaaaaa-0000-4000-8000-0000000000aa",
+   "created_at": "2026-10-21T18:00:00Z"
+  },
+  {
+   "id": "4709868d-2224-534c-beeb-51b26e647894",
+   "name": "Centro de Coyoacán",
+   "category": "Paseo",
+   "description": "Calles empedradas, la Fuente de los Coyotes, esquites y nieves. El domingo perfecto.",
+   "photos": [
+    "https://images.unsplash.com/photo-1699654415265-f6fc4538b08e?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1627024456875-03c3b2b105ad?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1614895196252-f127fb7c421d?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "Gratis",
+   "tags": [
+    "Familiar",
+    "Pet friendly",
+    "Mañana"
+   ],
+   "state": "Ciudad de México",
+   "city": "Coyoacán",
+   "municipality": "Coyoacán",
+   "likes": 35,
+   "saves_count": 131,
+   "created_by": "8b1f6c2e-0000-4000-8000-00000000d3e0",
+   "created_at": "2026-10-22T18:00:00Z"
+  },
+  {
+   "id": "ffbca4b6-8485-5ee1-97ed-779dc77b8985",
+   "name": "Palacio de Bellas Artes",
+   "category": "Cultura",
+   "description": "Murales de Rivera, Siqueiros y Orozco bajo la cúpula más bonita de la ciudad.",
+   "photos": [
+    "https://images.unsplash.com/photo-1547686669-9a8cb1a22d91?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "$",
+   "tags": [
+    "Artístico",
+    "Instagrameable",
+    "Romántico"
+   ],
+   "state": "Ciudad de México",
+   "city": "Cuauhtémoc",
+   "municipality": "Cuauhtémoc",
+   "likes": 33,
+   "saves_count": 120,
+   "created_by": "aaaaaaaa-0000-4000-8000-0000000000aa",
+   "created_at": "2026-10-23T18:00:00Z"
+  },
+  {
+   "id": "1b5a67f2-cfd9-50d4-a842-fd573d6b6cfa",
+   "name": "Zona Arqueológica de Teotihuacán",
+   "category": "Cultura",
+   "description": "La Calzada de los Muertos y la Pirámide del Sol. Llega temprano, lleva agua y sombrero.",
+   "photos": [
+    "https://images.unsplash.com/photo-1645022175328-38e88b6f9dd6?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1643177571935-5204362103fa?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "$",
+   "tags": [
+    "Familiar",
+    "Mañana",
+    "Instagrameable"
+   ],
+   "state": "Estado de México",
+   "city": "Teotihuacán",
+   "municipality": "Teotihuacán",
+   "likes": 22,
+   "saves_count": 98,
+   "created_by": "8b1f6c2e-0000-4000-8000-00000000d3e0",
+   "created_at": "2026-10-24T18:00:00Z"
+  },
+  {
+   "id": "4b745ecb-79be-59d8-be1d-f46dc3cd43d4",
+   "name": "Desierto de los Leones",
+   "category": "Desconexión",
+   "description": "Un convento carmelita del siglo XVII rodeado de oyameles. Quesadillas al salir, obligatorio.",
+   "photos": [
+    "https://images.unsplash.com/photo-1732345692652-d0e7492f2e8a?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1697604498189-ea3be8e31e7c?w=1080&q=75&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1642973428109-628c14d94272?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "$",
+   "tags": [
+    "Pet friendly",
+    "Familiar",
+    "Mañana"
+   ],
+   "state": "Ciudad de México",
+   "city": "Cuajimalpa",
+   "municipality": "Cuajimalpa",
+   "likes": 7,
+   "saves_count": 77,
+   "created_by": "aaaaaaaa-0000-4000-8000-0000000000aa",
+   "created_at": "2026-10-25T18:00:00Z"
+  },
+  {
+   "id": "16840523-baaa-538c-8c24-96c300cb4f96",
+   "name": "Kiosco Morisco y Santa María la Ribera",
+   "category": "Paseo",
+   "description": "Un kiosco morisco de 1884 en medio de un barrio que sigue siendo barrio.",
+   "photos": [
+    "https://images.unsplash.com/photo-1580934738416-ad531f2920f7?w=1080&q=75&auto=format&fit=crop"
+   ],
+   "price_range": "Gratis",
+   "tags": [
+    "Instagrameable",
+    "Familiar",
+    "Barato"
+   ],
+   "state": "Ciudad de México",
+   "city": "Cuauhtémoc",
+   "municipality": "Cuauhtémoc",
+   "likes": 2,
+   "saves_count": 5,
+   "created_by": "8b1f6c2e-0000-4000-8000-00000000d3e0",
+   "created_at": "2026-10-26T18:00:00Z"
+  }
+ ],
+ "profiles": [
+  {
+   "id": "8b1f6c2e-0000-4000-8000-00000000d3e0",
+   "name": "Guía de ejemplo",
+   "username": "guia_demo",
+   "photourl": null,
+   "isverified": true,
+   "role": "guia",
+   "followerscount": 1280
+  },
+  {
+   "id": "aaaaaaaa-0000-4000-8000-0000000000aa",
+   "name": "Itervia",
+   "username": "itervia",
+   "photourl": null,
+   "isverified": true,
+   "role": "admin",
+   "followerscount": 0
+  }
+ ]
+}
