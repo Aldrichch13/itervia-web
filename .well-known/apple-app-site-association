@@ -5,7 +5,9 @@
         "appIDs": ["4MKWG9RSY9.com.mx.Itervia"],
         "components": [
           { "/": "/lugar/*", "comment": "Publicación de un lugar" },
-          { "/": "/perfil/*", "comment": "Perfil público" }
+          { "/": "/perfil/*", "comment": "Perfil público" },
+          { "/": "/plan/", "exclude": true, "comment": "Índice de planes: redirige a la portada" },
+          { "/": "/plan/*", "comment": "Inicio filtrado por plan (anuncios)" }
         ]
       }
     ]

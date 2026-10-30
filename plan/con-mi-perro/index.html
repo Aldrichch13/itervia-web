@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lugares pet friendly en la CDMX · Itervia</title>
+  <meta name="description" content="Lugares donde tu perro también es bienvenido.">
+  <!-- Las 5 páginas de /plan/ son iguales salvo slug, título y texto, que repiten PLANS de assets/app.js para la vista previa. -->
+  <meta name="apple-itunes-app" content="app-id=6758466804, app-argument=https://itervia.com.mx/plan/con-mi-perro/">
+  <meta name="theme-color" content="#966B9D">
+  <meta property="og:title" content="Lugares pet friendly en la CDMX">
+  <meta property="og:description" content="Lugares donde tu perro también es bienvenido.">
+  <meta property="og:image" content="https://itervia.com.mx/assets/icon-512.png">
+  <meta property="og:locale" content="es_MX">
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap narrow">
+      <a class="mark" href="/"><img src="/assets/logo.png" alt="" width="34" height="34">Itervia</a>
+      <a class="btn btn-primary btn-small" href="/#descargar">Descargar</a>
+    </div>
+  </header>
+
+  <main class="wrap narrow" style="padding-top:24px">
+    <div id="demo-slot"></div>
+    <span class="kicker">Ciudad de México</span>
+    <h1 id="plan-title">Lugares pet friendly en la CDMX</h1>
+    <p class="lead" id="plan-text">Lugares donde tu perro también es bienvenido.</p>
+    <div class="store-row" id="plan-stores"></div>
+    <section class="block">
+      <div class="grid" id="plan-grid" aria-busy="true"></div>
+    </section>
+    <section class="block">
+      <h2 style="font-size:20px">Otros planes</h2>
+      <div class="store-row" id="other-plans"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap narrow">
+      <nav aria-label="Legal y ayuda">
+        <a href="/">Inicio</a>
+        <a href="/privacidad/">Aviso de privacidad</a>
+        <a href="/soporte/">Soporte</a>
+      </nav>
+      <p>© 2026 Itervia · Hecho en la Ciudad de México</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { renderPlanPage, otherPlans } from '/assets/plan.js';
+    document.getElementById('other-plans').append(...otherPlans('con-mi-perro'));
+    renderPlanPage('con-mi-perro');
+  </script>
+</body>
+</html>

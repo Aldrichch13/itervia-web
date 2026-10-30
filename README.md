@@ -15,6 +15,8 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 | `/` | Portada: "¿A dónde vamos?", botones de descarga, una publicación destacada, grid de lo más guardado (8 + "ver todos en la app"), cómo funciona, Guías, promesa de privacidad. **También es el `site_url` de Supabase Auth:** si llega con `code`, `access_token`, `error`… lo pasa a `itervia://auth/callback` antes de pintar. |
 | `/lugar/?id=<uuid>` | Publicación de un lugar: autor (con insignia GUÍA), hasta 3 fotos en carrusel, "Perfecto para…", tags, zona, señal de popularidad y 5 lugares más. Dirección exacta, mapa y horarios quedan en la app. |
 | `/perfil/?u=<username>` | Perfil público: nombre, @usuario, insignia, lugares que recomienda (hasta 9) y "Seguir en la app". Lee la vista `public_profiles` (sin correo ni teléfono). |
+| `/plan/<plan>/` | Aterrizaje de los anuncios por plan (`cita`, `amigos`, `fin-de-semana`, `trabajar`, `con-mi-perro`): título, texto, botones de descarga y hasta 9 lugares del plan con el mismo filtro que la app (`PLANS` en `assets/app.js`, copia de `docs/planes.md`). Con la app instalada, el enlace universal la abre en Inicio con ese plan. `/plan/` redirige a la portada. |
+| `/.well-known/apple-app-site-association` | Enlaces universales: `/lugar/*`, `/perfil/*` y `/plan/*` abren la app si está instalada. |
 | `/404.html` | Página no encontrada. |
 | `/privacidad/` | Aviso de privacidad (LFPDPPP). La app y App Store Connect apuntan aquí. **Falta el nombre y domicilio del responsable** (comentario en el HTML). |
 | `/soporte/` | Contacto y preguntas frecuentes. URL de soporte de la app. |
