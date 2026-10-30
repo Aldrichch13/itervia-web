@@ -45,7 +45,7 @@
   </footer>
 
   <script type="module">
-    import { placeById, morePlaces, placeTile, gateTile, stickyCTA, demoNotice, track, el, perfectFor } from '/assets/app.js';
+    import { placeById, morePlaces, placeTile, gateTile, stickyCTA, demoNotice, el, perfectFor } from '/assets/app.js';
     import { renderPost } from '/assets/post.js';
 
     const slot = document.getElementById('post');
@@ -70,7 +70,6 @@
         document.querySelector('meta[name="apple-itunes-app"]').content = `app-id=6758466804, app-argument=${location.href}`;
         slot.replaceChildren(await renderPost(place));
         stickyCTA(place.name, 'Guárdalo y ve cómo llegar en la app');
-        track('web_place_open', { place_id: place.id });
         const more = await morePlaces(place.id, 5);
         if (more.length) {
           document.getElementById('more').append(...more.map(placeTile), gateTile());

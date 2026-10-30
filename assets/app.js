@@ -106,17 +106,6 @@ export async function placesByCreator(userId, limit = 9) {
   return rest(`places?select=${PLACE_COLUMNS}&created_by=eq.${userId.toLowerCase()}&order=created_at.desc&limit=${limit}`);
 }
 
-// ------------------------------------------------------------------ analítica propia (tabla events)
-export function track(name, props = {}) {
-  if (isDemo) return;
-  const body = JSON.stringify({ name, props: { ...props, source: 'web' } });
-  fetch(`${CONFIG.supabaseUrl}/rest/v1/events`, {
-    method: 'POST', keepalive: true, body,
-    headers: { apikey: CONFIG.supabaseAnonKey, Authorization: `Bearer ${CONFIG.supabaseAnonKey}`,
-      'Content-Type': 'application/json', Prefer: 'return=minimal' },
-  }).catch(() => {});
-}
-
 // ------------------------------------------------------------------ DOM
 export function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -167,9 +156,9 @@ export const platform = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Android/.test(ua)
 
 export function storeButtons({ compact = false } = {}) {
   const cls = compact ? 'btn btn-primary btn-small' : 'btn btn-primary';
-  const ios = el('a', { class: cls, href: CONFIG.appStoreUrl, onclick: () => track('web_install_tap', { store: 'ios', page: location.pathname }) }, 'Descargar para iPhone');
+  const ios = el('a', { class: cls, href: CONFIG.appStoreUrl }, 'Descargar para iPhone');
   const android = CONFIG.playStoreUrl
-    ? el('a', { class: compact ? 'btn btn-ghost btn-small' : 'btn btn-ghost', href: CONFIG.playStoreUrl, onclick: () => track('web_install_tap', { store: 'android', page: location.pathname }) }, 'Descargar para Android')
+    ? el('a', { class: compact ? 'btn btn-ghost btn-small' : 'btn btn-ghost', href: CONFIG.playStoreUrl }, 'Descargar para Android')
     : el('span', { class: compact ? 'btn btn-ghost btn-small' : 'btn btn-ghost', 'aria-disabled': 'true' }, 'Android · muy pronto');
   return platform === 'android' ? [android, ios] : [ios, android];
 }
@@ -186,7 +175,6 @@ const REASONS = {
 let sheetNodes;
 export function openInstallSheet(reason = 'default') {
   const [title, text] = REASONS[reason] ?? REASONS.default;
-  track('web_gate', { reason, page: location.pathname });
   if (!sheetNodes) {
     const backdrop = el('div', { class: 'sheet-backdrop', onclick: closeInstallSheet });
     const sheet = el('div', { class: 'sheet', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': 'sheet-title' });
