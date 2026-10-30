@@ -18,16 +18,19 @@ export const CATEGORIES = {
 const fold = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase();
 const lenient = (table, raw) => Object.keys(table).find(k => fold(k) === fold(raw));
 
-// Copia de PerfectFor (ItervaCore / :core, docs/perfecto-para.md). Si cambia allá, cambia aquí.
+// Copia de PerfectFor (ItervaCore / :core, docs/perfecto-para.md del repo de la app). Si cambia allá, cambia aquí.
+// [tags, complemento, solo en estas categorías (opcional; un lugar sin categoría siempre cuenta)]
+const DATE_CATEGORIES = ['Comida', 'Cafetería', 'Experiencias'];
 const RULES = [
-  [['Romántico', 'Noche'], 'una cena romántica'], [['Tranquilo'], 'una cita tranquila'],
+  [['Romántico', 'Noche'], 'una cena romántica'], [['Para trabajar'], 'trabajar o estudiar'],
+  [['Tranquilo'], 'una cita tranquila', DATE_CATEGORIES],
   [['Romántico'], 'una cita romántica'], [['Amigos', 'Noche'], 'una noche con amigos'],
-  [['Animado', 'Noche'], 'una noche de fiesta'], [['Para trabajar'], 'trabajar o estudiar'],
+  [['Animado', 'Noche'], 'una noche de fiesta'],
   [['Familiar'], 'un plan en familia'], [['Pet friendly'], 'ir con tu mascota'],
   [['Amigos'], 'salir con amigos'], [['Elegante'], 'una ocasión especial'], [['Premium'], 'una ocasión especial'],
   [['Artístico'], 'inspirarte con arte'], [['Mañana'], 'empezar bien el día'], [['Noche'], 'una salida de noche'],
   [['Solo'], 'un rato a solas'], [['Instagrameable'], 'tomar fotos increíbles'], [['Animado'], 'pasarla bien'],
-  [['Barato'], 'un plan económico'],
+  [['Barato'], 'un plan económico'], [['Tranquilo'], 'un rato tranquilo'],
 ];
 const FALLBACK = {
   'Comida': 'disfrutar una buena comida', 'Cafetería': 'un buen café', 'Experiencias': 'vivir algo nuevo',
@@ -39,7 +42,9 @@ export function placeTags(place) {
 export function placeCategory(place) { return lenient(CATEGORIES, place.category); }
 export function perfectFor(place) {
   const present = new Set(placeTags(place));
-  const rule = RULES.find(([all]) => all.every(t => present.has(t)));
+  const category = placeCategory(place);
+  const rule = RULES.find(([all, , onlyIn]) =>
+    all.every(t => present.has(t)) && (!onlyIn || !category || onlyIn.includes(category)));
   return rule ? rule[1] : (FALLBACK[placeCategory(place)] ?? 'tu próximo plan');
 }
 export function photoURLs(place) { return (place.photos ?? []).filter(Boolean); }
