@@ -12,7 +12,8 @@ export const TAGS = {
   'Barato': ['#207B37', '💲'], 'Para trabajar': ['#4D66B9', '💻'], 'Pet friendly': ['#8C6038', '🐾'],
 };
 export const CATEGORIES = {
-  'Comida': ['#9E5C00', '🍴'], 'Cafetería': ['#0066D6', '☕'], 'Experiencias': ['#9345BA', '⭐'],
+  'Comida': ['#9E5C00', '🍴'], 'Cafetería': ['#0066D6', '☕'], 'Vida nocturna': ['#4F4CC9', '🍸'],
+  'Experiencias': ['#9345BA', '⭐'],
   'Cultura': ['#0066D6', '🏛️'], 'Paseo': ['#207B37', '🚶'], 'Desconexión': ['#217887', '🌿'],
 };
 const fold = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase();
@@ -20,8 +21,9 @@ const lenient = (table, raw) => Object.keys(table).find(k => fold(k) === fold(ra
 
 // Copia de PerfectFor (ItervaCore / :core, docs/perfecto-para.md del repo de la app). Si cambia allá, cambia aquí.
 // [tags, complemento, solo en estas categorías (opcional; un lugar sin categoría siempre cuenta)]
-const DATE_CATEGORIES = ['Comida', 'Cafetería', 'Experiencias'];
+const DATE_CATEGORIES = ['Comida', 'Cafetería', 'Vida nocturna', 'Experiencias'];
 const RULES = [
+  [['Romántico'], 'una cita romántica', ['Vida nocturna']],
   [['Romántico', 'Noche'], 'una cena romántica'], [['Para trabajar'], 'trabajar o estudiar'],
   [['Tranquilo'], 'una cita tranquila', DATE_CATEGORIES],
   [['Romántico'], 'una cita romántica'], [['Amigos', 'Noche'], 'una noche con amigos'],
@@ -33,7 +35,8 @@ const RULES = [
   [['Barato'], 'un plan económico'], [['Tranquilo'], 'un rato tranquilo'],
 ];
 const FALLBACK = {
-  'Comida': 'disfrutar una buena comida', 'Cafetería': 'un buen café', 'Experiencias': 'vivir algo nuevo',
+  'Comida': 'disfrutar una buena comida', 'Cafetería': 'un buen café', 'Vida nocturna': 'una noche de tragos',
+  'Experiencias': 'vivir algo nuevo',
   'Cultura': 'un plan cultural', 'Paseo': 'salir a pasear', 'Desconexión': 'desconectarte',
 };
 export function placeTags(place) {
