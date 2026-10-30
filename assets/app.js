@@ -47,6 +47,21 @@ export function perfectFor(place) {
     all.every(t => present.has(t)) && (!onlyIn || !category || onlyIn.includes(category)));
   return rule ? rule[1] : (FALLBACK[placeCategory(place)] ?? 'tu próximo plan');
 }
+// Copia de Plan (ItervaCore, docs/planes.md del repo de la app). Si cambia allá, cambia aquí.
+// slug: [título de la página, texto, etiquetas (cualquiera)]. Cita: Tranquilo cuenta solo en DATE_CATEGORIES.
+export const PLANS = {
+  'cita': ['Lugares para una cita en la CDMX', 'Restaurantes, cafés y planes románticos o tranquilos para una primera cita o para celebrar algo.', ['Romántico', 'Elegante']],
+  'amigos': ['Lugares para salir con amigos en la CDMX', 'Tacos, bares y planes animados para ir en grupo, de día o de noche.', ['Amigos', 'Animado', 'Noche']],
+  'fin-de-semana': ['Planes de fin de semana en la CDMX', 'Desayunos, paseos y planes en familia para el sábado o el domingo.', ['Familiar', 'Mañana']],
+  'trabajar': ['Cafés para trabajar en la CDMX', 'Lugares para trabajar o estudiar con tu laptop, o para un rato a solas.', ['Para trabajar', 'Solo']],
+  'con-mi-perro': ['Lugares pet friendly en la CDMX', 'Lugares donde tu perro también es bienvenido.', ['Pet friendly']],
+};
+export function planMatches(place, slug) {
+  const tags = new Set(placeTags(place));
+  if (PLANS[slug][2].some(t => tags.has(t))) return true;
+  const category = placeCategory(place);
+  return slug === 'cita' && tags.has('Tranquilo') && (!category || DATE_CATEGORIES.includes(category));
+}
 export function photoURLs(place) { return (place.photos ?? []).filter(Boolean); }
 export function zoneLine(place) {
   return [place.municipality || place.city, place.state].map(s => (s ?? '').trim()).filter(Boolean).join(', ');
@@ -75,6 +90,12 @@ async function demo() {
 export async function featuredPlaces(limit = 8) {
   if (isDemo) return (await demo()).places.slice(0, limit);
   return rest(`places?select=${PLACE_COLUMNS}&order=saves_count.desc.nullslast,created_at.desc&limit=${limit}`);
+}
+/** Lugares de un plan (filtro igual que la app), los más guardados primero. */
+export async function placesForPlan(slug, limit = 9) {
+  const all = isDemo ? (await demo()).places
+    : await rest(`places?select=${PLACE_COLUMNS}&order=saves_count.desc.nullslast,created_at.desc&limit=500`);
+  return all.filter(p => planMatches(p, slug)).slice(0, limit);
 }
 export async function placeById(id) {
   if (!UUID.test(id ?? '')) return null;
