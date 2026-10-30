@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4MKWG9RSY9.com.mx.Itervia"],
+        "components": [
+          { "/": "/lugar/*", "comment": "Publicación de un lugar" },
+          { "/": "/perfil/*", "comment": "Perfil público" }
+        ]
+      }
+    ]
+  }
+}
