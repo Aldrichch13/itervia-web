@@ -107,7 +107,7 @@
   </footer>
 
   <script type="module">
-    import { featuredPlaces, placeTile, gateTile, skeletonTiles, storeButtons, demoNotice, track } from '/assets/app.js';
+    import { featuredPlaces, placeTile, gateTile, skeletonTiles, storeButtons, demoNotice } from '/assets/app.js';
     import { renderPost } from '/assets/post.js';
 
     document.getElementById('hero-stores').append(...storeButtons());
@@ -117,7 +117,6 @@
 
     const grid = document.getElementById('featured');
     grid.append(...skeletonTiles(9));
-    track('web_home_open', {});
     try {
       const places = await featuredPlaces(8);
       grid.replaceChildren(...places.map(placeTile), gateTile());

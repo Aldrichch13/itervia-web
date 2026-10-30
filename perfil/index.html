@@ -32,7 +32,7 @@
   </footer>
 
   <script type="module">
-    import { profileByUsername, placesByCreator, placeTile, gateTile, skeletonTiles, avatar, el, openInstallSheet, stickyCTA, demoNotice, track } from '/assets/app.js';
+    import { profileByUsername, placesByCreator, placeTile, gateTile, skeletonTiles, avatar, el, openInstallSheet, stickyCTA, demoNotice } from '/assets/app.js';
 
     const root = document.getElementById('profile');
     const demo = demoNotice();
@@ -63,7 +63,6 @@
             el('button', { class: 'btn btn-primary', type: 'button', onclick: () => openInstallSheet('follow') }, 'Seguir en la app')),
           el('h2', { class: 'visually-hidden' }, 'Lugares recomendados'),
           grid);
-        track('web_profile_open', { username: handle });
         const places = await placesByCreator(profile.id, 9);
         document.getElementById('stats').append(
           el('div', {}, el('b', {}, String(places.length)), el('span', {}, 'Lugares')),
