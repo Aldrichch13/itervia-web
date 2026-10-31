@@ -131,6 +131,47 @@ export async function profileByUsername(username) {
   const rows = await rest(`public_profiles?select=id,name,username,photourl,isverified,role,followerscount&username=ilike.${encodeURIComponent(username.replace(/_/g, '\\_'))}&limit=1`);
   return rows[0] ?? null;
 }
+// Planes como ruta (S14, docs/planes/ruta.md §7 del repo de la app). Slugs: minúsculas, números y guiones.
+const SLUG = /^[a-z0-9-]{1,80}$/;
+async function rpc(name, body) {
+  const res = await fetch(`${CONFIG.supabaseUrl}/rest/v1/rpc/${name}`, {
+    method: 'POST',
+    headers: { apikey: CONFIG.supabaseAnonKey, Authorization: `Bearer ${CONFIG.supabaseAnonKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`Supabase ${res.status}`);
+  return res.json();
+}
+/** Un plan publicado con sus paradas (`get_plan`), o null. */
+export async function planBySlug(slug) {
+  if (!SLUG.test(slug ?? '') || isDemo) return null;
+  return rpc('get_plan', { p_slug: slug });
+}
+/** Planes publicados de una ocasión (`get_plans`), los más guardados primero. */
+export async function plansFor(occasion) {
+  if (isDemo) return [];
+  return rpc('get_plans', { p_occasion: occasion });
+}
+/** "3 paradas · 5 h · $$", igual que `Itinerary.facts` de la app. */
+export function planFacts(plan) {
+  const parts = [`${plan.stops.length} paradas`];
+  const m = plan.duration_minutes;
+  if (m) parts.push(m % 60 === 0 ? `${m / 60} h` : `${Math.floor(m / 60)} h ${m % 60} min`);
+  if (plan.budget) parts.push(plan.budget);
+  return parts.join(' · ');
+}
+/** "19:30" de "19:30:00". */
+export function planClock(time) { return time ? String(time).slice(0, 5) : null; }
+export function planCover(plan) { return plan.cover_photo || photoURLs(plan.stops[0]?.place ?? {})[0] || null; }
+export function planURL(plan) { return `/plan/${plan.occasion}/${plan.slug}/`; }
+export function planCard(plan) {
+  const cover = planCover(plan);
+  return el('a', { class: 'plan-card', href: planURL(plan) },
+    cover ? el('img', { src: cover, alt: '', loading: 'lazy' }) : null,
+    el('span', {}, el('b', {}, plan.title), el('small', {}, planFacts(plan)),
+      el('small', { class: 'route' }, plan.stops.map(s => s.place.name).join(' → '))));
+}
+
 export async function placesByCreator(userId, limit = 9) {
   if (!userId) return [];
   if (isDemo) return (await demo()).places.filter(p => String(p.created_by).toLowerCase() === userId.toLowerCase()).slice(0, limit);
@@ -201,6 +242,7 @@ const REASONS = {
   photos: ['Ve todas las fotos en la app', 'Galería completa, precio, pagos y estacionamiento.'],
   follow: ['Sigue a quien recomienda bien', 'Ve primero los lugares nuevos de las personas que sigues.'],
   grid: ['Hay más lugares en la app', 'Explora por zona, por plan o cerca de ti.'],
+  plan: ['Guarda este plan en la app', 'Mapa con las paradas, horarios de hoy y cómo llegar a cada una.'],
   default: ['Esto se hace en la app', 'La web solo muestra una vista previa. Descarga Itervia gratis.'],
 };
 let sheetNodes;
