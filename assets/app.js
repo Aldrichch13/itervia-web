@@ -57,7 +57,7 @@ export function perfectFor(place) {
     all.every(t => present.has(t)) && (!onlyIn || !category || onlyIn.includes(category)));
   return rule ? rule[1] : (FALLBACK[placeCategory(place)] ?? 'tu próximo plan');
 }
-// Copia de Plan (ItervaCore, docs/planes.md del repo de la app). Si cambia allá, cambia aquí.
+// Copia de Plan (ItervaCore, docs/planes/inicio.md del repo de la app). Si cambia allá, cambia aquí.
 // slug: [título de la página, texto, etiquetas (cualquiera)]. Cita: Tranquilo cuenta solo en DATE_CATEGORIES.
 export const PLANS = {
   'cita': ['Lugares para una cita en la CDMX', 'Restaurantes, cafés y planes románticos o tranquilos para una primera cita o para celebrar algo.', ['Romántico', 'Elegante']],
