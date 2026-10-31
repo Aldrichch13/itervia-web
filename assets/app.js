@@ -63,7 +63,7 @@ export const PLANS = {
   'cita': ['Lugares para una cita en la CDMX', 'Restaurantes, cafés y planes románticos o tranquilos para una primera cita o para celebrar algo.', ['Romántico', 'Elegante']],
   'amigos': ['Lugares para salir con amigos en la CDMX', 'Tacos, bares y planes animados para ir en grupo, de día o de noche.', ['Amigos', 'Animado', 'Noche']],
   'fin-de-semana': ['Planes de fin de semana en la CDMX', 'Desayunos, paseos y planes en familia para el sábado o el domingo.', ['Familiar', 'Mañana']],
-  'trabajar': ['Cafés para trabajar en la CDMX', 'Lugares para trabajar o estudiar con tu laptop, o para un rato a solas.', ['Para trabajar', 'Solo']],
+  'trabajar': ['Cafés para trabajar en la CDMX', 'Lugares para trabajar o estudiar con tu laptop.', ['Para trabajar']],
   'con-mi-perro': ['Lugares pet friendly en la CDMX', 'Lugares donde tu perro también es bienvenido.', ['Pet friendly']],
 };
 export function planMatches(place, slug) {
