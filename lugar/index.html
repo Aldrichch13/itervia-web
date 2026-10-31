@@ -51,7 +51,8 @@
     const slot = document.getElementById('post');
     const demo = demoNotice();
     if (demo) document.getElementById('demo-slot').append(demo);
-    const id = new URLSearchParams(location.search).get('id');
+    // /lugar/?id=<uuid> (enlaces viejos) o /lugar/<uuid>/ (páginas de scripts/lugares.py).
+    const id = new URLSearchParams(location.search).get('id') ?? location.pathname.split('/').filter(Boolean)[1];
 
     function notFound() {
       document.title = 'Lugar no encontrado · Itervia';
