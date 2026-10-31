@@ -52,7 +52,7 @@
   </footer>
 
   <script type="module">
-    import { placeById, morePlaces, placeTile, gateTile, stickyCTA, demoNotice, el, perfectFor } from '/assets/app.js';
+    import { placeById, morePlaces, placeTile, gateTile, stickyCTA, demoNotice, el, perfectPhrase } from '/assets/app.js';
     import { renderPost } from '/assets/post.js';
 
     const slot = document.getElementById('post');
@@ -74,7 +74,7 @@
       if (!place) { notFound(); }
       else {
         document.title = `${place.name} · Itervia`;
-        document.querySelector('meta[name="description"]').content = `${place.name}: perfecto para ${perfectFor(place)}. Míralo en Itervia.`;
+        document.querySelector('meta[name="description"]').content = `${place.name}: ${perfectPhrase(place).toLowerCase()}. Míralo en Itervia.`;
         document.querySelector('meta[name="apple-itunes-app"]').content = `app-id=6758466804, app-argument=${location.href}`;
         slot.replaceChildren(await renderPost(place));
         stickyCTA(place.name, 'Guárdalo y ve cómo llegar en la app');

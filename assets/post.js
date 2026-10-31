@@ -2,7 +2,7 @@
 // acciones abajo y el texto. Se ve, pero toda acción lleva a la app.
 import { CONFIG } from './config.js';
 import {
-  el, chip, avatar, iconButton, openInstallSheet, perfectFor, placeTags, placeCategory,
+  el, chip, avatar, iconButton, openInstallSheet, perfectFor, prefixFor, placeTags, placeCategory,
   photoURLs, zoneLine, profileById, CATEGORIES, TAGS,
 } from './app.js';
 
@@ -73,7 +73,7 @@ export async function renderPost(place, { compact = false } = {}) {
       el('div', { class: 'row' },
         category ? chip(category, CATEGORIES[category]) : null,
         place.price_range ? el('span', { class: 'chip price' }, place.price_range) : null),
-      el('p', { class: 'perfect' }, 'Perfecto para ', el('b', {}, perfectFor(place))),
+      el('p', { class: 'perfect' }, `${prefixFor(place.id)} `, el('b', {}, perfectFor(place))),
       !compact && place.description ? el('p', { class: 'desc' }, place.description) : null,
       !compact && tags.length ? el('div', { class: 'row' }, tags.map(t => chip(t, TAGS[t]))) : null,
       zoneLine(place) ? el('p', { class: 'zone' }, `📍 ${zoneLine(place)}`) : null,
