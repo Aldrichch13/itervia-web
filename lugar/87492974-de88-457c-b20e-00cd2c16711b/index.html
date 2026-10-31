@@ -1,0 +1,95 @@
+<!doctype html>
+<!-- Generado por scripts/lugares.py: no lo edites a mano. -->
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fierro · Itervia</title>
+  <meta name="description" content="Cantina moderna de cocina norteña: carne, tortillas de harina y tragos para el grupo.">
+  <link rel="canonical" href="https://itervia.com.mx/lugar/87492974-de88-457c-b20e-00cd2c16711b/">
+  <meta name="apple-itunes-app" content="app-id=6758466804, app-argument=https://itervia.com.mx/lugar/87492974-de88-457c-b20e-00cd2c16711b/">
+  <meta name="theme-color" content="#966B9D">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Itervia">
+  <meta property="og:url" content="https://itervia.com.mx/lugar/87492974-de88-457c-b20e-00cd2c16711b/">
+  <meta property="og:title" content="Fierro">
+  <meta property="og:description" content="Cantina moderna de cocina norteña: carne, tortillas de harina y tragos para el grupo.">
+  <meta property="og:image" content="https://lh3.googleusercontent.com/grass-cs/AABkmLc2FwX8h375IBdAKigWKj21F_5K4hAW9nC6G1H-N2ZW6ktFtkd62dmTXWaHNflLrVa1ea_gdk7vycFB1wLGek0CysVS_fIokx2Va3bC-46InS8AbubhwTCIO6chuHT9mUSWw2V3K9wx1Bk=w960">
+  <meta property="og:image:alt" content="Fierro">
+  <meta property="og:locale" content="es_MX">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap narrow">
+      <a class="mark" href="/"><img src="/assets/logo.png" alt="" width="34" height="34">Itervia</a>
+      <a class="btn btn-primary btn-small" href="/#descargar">Descargar</a>
+    </div>
+  </header>
+
+  <main class="wrap narrow" style="padding-top:16px">
+    <div id="demo-slot"></div>
+    <div id="post" aria-live="polite"><div class="post"><div class="media tile skeleton"></div></div></div>
+    <section class="block" id="more-block" hidden>
+      <h2 style="font-size:24px">Más lugares en Itervia</h2>
+      <p class="sub">Una muestra. Por zona, por plan o cerca de ti, en la app.</p>
+      <div class="grid" id="more"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap narrow">
+      <nav aria-label="Legal y ayuda">
+        <a href="/">Inicio</a>
+        <a href="/privacidad/">Aviso de privacidad</a>
+        <a href="/soporte/">Soporte</a>
+      </nav>
+      <p>¿Algo no está bien con este lugar? Repórtalo desde la app o escribe a soporte@itervia.com.mx.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { placeById, morePlaces, placeTile, gateTile, stickyCTA, demoNotice, el, perfectPhrase } from '/assets/app.js';
+    import { renderPost } from '/assets/post.js';
+
+    const slot = document.getElementById('post');
+    const demo = demoNotice();
+    if (demo) document.getElementById('demo-slot').append(demo);
+    // /lugar/?id=<uuid> (enlaces viejos) o /lugar/<uuid>/ (páginas de scripts/lugares.py).
+    const id = new URLSearchParams(location.search).get('id') ?? location.pathname.split('/').filter(Boolean)[1];
+
+    function notFound() {
+      document.title = 'Lugar no encontrado · Itervia';
+      slot.replaceChildren(el('div', { class: 'empty' },
+        el('h1', {}, 'No encontramos este lugar'),
+        el('p', {}, 'Puede que el enlace esté incompleto o que el lugar ya no esté en Itervia.'),
+        el('a', { class: 'btn btn-primary', href: '/' }, 'Ver lugares')));
+    }
+
+    try {
+      const place = await placeById(id);
+      if (!place) { notFound(); }
+      else {
+        document.title = `${place.name} · Itervia`;
+        document.querySelector('meta[name="description"]').content = `${place.name}: ${perfectPhrase(place).toLowerCase()}. Míralo en Itervia.`;
+        document.querySelector('meta[name="apple-itunes-app"]').content = `app-id=6758466804, app-argument=${location.href}`;
+        slot.replaceChildren(await renderPost(place));
+        stickyCTA(place.name, 'Guárdalo y ve cómo llegar en la app');
+        const more = await morePlaces(place.id, 5);
+        if (more.length) {
+          document.getElementById('more').append(...more.map(placeTile), gateTile());
+          document.getElementById('more-block').hidden = false;
+        }
+      }
+    } catch (e) {
+      slot.replaceChildren(el('div', { class: 'empty' },
+        el('h1', {}, 'No pudimos cargar el lugar'),
+        el('p', {}, 'Revisa tu conexión e inténtalo de nuevo.'),
+        el('button', { class: 'btn btn-primary', type: 'button', onclick: () => location.reload() }, 'Reintentar')));
+    }
+  </script>
+</body>
+</html>
