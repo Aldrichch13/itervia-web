@@ -43,6 +43,13 @@ export function placeTags(place) {
   return [...new Set((place.tags ?? []).map(t => lenient(TAGS, t)).filter(Boolean))];
 }
 export function placeCategory(place) { return lenient(CATEGORIES, place.category); }
+// Arranque de la frase: el último byte del id elige uno, así el mismo lugar dice siempre lo mismo.
+const PREFIXES = ['Ideal para', 'Perfecto para', 'Buena opción para', 'Va muy bien para'];
+export function prefixFor(id) {
+  const byte = parseInt(String(id ?? '').slice(-2), 16);
+  return Number.isNaN(byte) ? PREFIXES[0] : PREFIXES[byte % PREFIXES.length];
+}
+export function perfectPhrase(place) { return `${prefixFor(place.id)} ${perfectFor(place)}`; }
 export function perfectFor(place) {
   const present = new Set(placeTags(place));
   const category = placeCategory(place);
@@ -155,7 +162,7 @@ export function placeTile(place) {
   const photo = photoURLs(place)[0];
   return el('a', { class: 'tile', href: `/lugar/?id=${place.id}` },
     photo ? el('img', { src: photo, alt: '', loading: 'lazy' }) : null,
-    el('span', { class: 'cap' }, place.name, el('small', {}, `Perfecto para ${perfectFor(place)}`)));
+    el('span', { class: 'cap' }, place.name, el('small', {}, perfectPhrase(place))));
 }
 export function gateTile(text = 'Ve todos en la app') {
   return el('button', { class: 'tile gate', type: 'button', onclick: () => openInstallSheet('grid') }, el('span', {}, '＋'), text);

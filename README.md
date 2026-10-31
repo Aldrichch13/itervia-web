@@ -27,7 +27,7 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 
 - Lee `places` y `public_profiles` con la **anon key** (pública; con ella las policies solo dejan leer lugares y perfiles públicos).
 - Sin anon key en `assets/config.js` corre en **modo demo** con `assets/demo.json` (lugares públicos de CDMX y fotos de Unsplash) y lo avisa en pantalla.
-- La frase "Perfecto para…" se calcula igual que en la app (`assets/app.js`, copia de `docs/perfecto-para.md`). Si cambia la regla, cámbiala aquí también.
+- La frase "Ideal para… / Perfecto para…" (arranque según el id) se calcula igual que en la app (`assets/app.js`, copia de `docs/perfecto-para.md`). Si cambia la regla, cámbiala aquí también.
 - Popularidad: muestra "Guardado por N personas" solo si `saves_count ≥ 10` (o likes ≥ 10); si no, "Nuevo en Itervia". Umbral en `config.js`.
 - Sin analítica: el sitio no registra visitas ni clics, no usa cookies ni rastreadores.
 
