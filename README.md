@@ -17,6 +17,7 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 | `/lugar/<uuid>/` | La misma publicación, pero con el `<head>` del lugar (nombre, descripción y su foto en `og:image`) para que la vista previa en WhatsApp o iMessage lleve la foto: los rastreadores no corren JS. Las genera `scripts/lugares.py` (acción `lugares.yml`, cada hora); no se editan a mano. Un lugar nuevo sin página aún cae en `404.html`, que lo manda a `/lugar/?id=`. La app comparte esta forma. |
 | `/perfil/?u=<username>` | Perfil público: nombre, @usuario, insignia, lugares que recomienda (hasta 9) y "Seguir en la app". Lee la vista `public_profiles` (sin correo ni teléfono). |
 | `/plan/<plan>/` | Aterrizaje de los anuncios por plan (`cita`, `amigos`, `fin-de-semana`, `trabajar`, `con-mi-perro`): título, texto, botones de descarga y hasta 9 lugares del plan con el mismo filtro que la app (`PLANS` en `assets/app.js`, copia de `docs/planes/inicio.md`). Con la app instalada, el enlace universal la abre en Inicio con ese plan. `/plan/` redirige a la portada. |
+| `/plan/<plan>/<slug>/` | Plan como ruta que comparte la app (`PlanShare`): portada, ocasión, "3 paradas · 4 h · $", paradas en orden con hora, nota y enlace a cada lugar, y el mapa bloqueado hacia la app. Lee `get_plan` (RPC pública). Las genera `scripts/planes.py` con el `<head>` del plan (`og:title` "¿Vamos? …", la ruta y la portada), en la misma acción que los lugares; plantilla en `plan/ruta/index.html`. Un plan nuevo sin página cae en `404.html`, que lo manda a `/plan/ruta/?p=<slug>`. Las páginas `/plan/<plan>/` muestran arriba los planes de esa ocasión (`get_plans`). |
 | `/.well-known/apple-app-site-association` | Enlaces universales: `/lugar/*`, `/perfil/*` y `/plan/*` abren la app si está instalada. |
 | `/404.html` | Página no encontrada. |
 | `/privacidad/` | Aviso de privacidad (LFPDPPP). La app y App Store Connect apuntan aquí. **Falta el nombre y domicilio del responsable** (comentario en el HTML). |
@@ -25,7 +26,7 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 
 ## Datos
 
-- Lee `places` y `public_profiles` con la **anon key** (pública; con ella las policies solo dejan leer lugares y perfiles públicos).
+- Lee `places`, `public_profiles` y las RPC públicas `get_plans` / `get_plan` con la **anon key** (pública; con ella las policies solo dejan leer lugares y perfiles públicos).
 - Sin anon key en `assets/config.js` corre en **modo demo** con `assets/demo.json` (lugares públicos de CDMX y fotos de Unsplash) y lo avisa en pantalla.
 - La frase "Ideal para… / Perfecto para…" (arranque según el id) se calcula igual que en la app (`assets/app.js`, copia de `docs/perfecto-para.md`). Si cambia la regla, cámbiala aquí también.
 - Popularidad: muestra "Guardado por N personas" solo si `saves_count ≥ 10` (o likes ≥ 10); si no, "Nuevo en Itervia". Umbral en `config.js`.

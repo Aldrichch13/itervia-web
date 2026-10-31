@@ -1,6 +1,6 @@
 // Página de un plan (/plan/<slug>/): a donde aterrizan los anuncios por plan cuando la
 // persona no tiene la app. Con la app instalada, el enlace universal la abre en ese plan.
-import { PLANS, placesForPlan, placeTile, gateTile, skeletonTiles, storeButtons, stickyCTA, demoNotice, el } from '/assets/app.js';
+import { PLANS, plansFor, planCard, placesForPlan, placeTile, gateTile, skeletonTiles, storeButtons, stickyCTA, demoNotice, el } from '/assets/app.js';
 
 export async function renderPlanPage(slug) {
   const [title, text] = PLANS[slug];
@@ -10,6 +10,11 @@ export async function renderPlanPage(slug) {
   const demo = demoNotice();
   if (demo) document.getElementById('demo-slot').append(demo);
   stickyCTA(title.replace(' en la CDMX', ''), 'Más lugares, por zona y cerca de ti, en la app');
+
+  // Arriba, los planes como ruta de esta ocasión (docs/planes/ruta.md §7); si fallan, solo lugares.
+  plansFor(slug).then(routes => {
+    if (routes.length) document.getElementById('plan-routes').replaceChildren(...routes.map(planCard));
+  }).catch(() => {});
 
   const grid = document.getElementById('plan-grid');
   grid.append(...skeletonTiles(9));

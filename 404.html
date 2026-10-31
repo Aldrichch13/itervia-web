@@ -6,6 +6,9 @@
     // Un lugar nuevo aún sin página propia (scripts/lugares.py corre cada hora): se ve con /lugar/?id=.
     const lugar = location.pathname.match(/^\/lugar\/([0-9a-f-]{36})\/?$/i);
     if (lugar) location.replace(`/lugar/?id=${lugar[1]}`);
+    // Lo mismo para un plan nuevo (scripts/planes.py): se ve con /plan/ruta/?p=<slug>.
+    const plan = location.pathname.match(/^\/plan\/[a-z-]+\/([a-z0-9-]+)\/?$/);
+    if (plan) location.replace(`/plan/ruta/?p=${plan[1]}`);
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Página no encontrada · Itervia</title>

@@ -211,3 +211,18 @@ footer a:hover { text-decoration: underline; }
 .doc details { background: var(--surface); border-radius: 16px; padding: 14px 18px; margin: 10px 0; box-shadow: var(--shadow); }
 .doc summary { font-weight: 700; cursor: pointer; }
 .doc details p { margin: 10px 0 0; color: var(--muted); }
+
+/* Planes como ruta (/plan/<ocasión>/<slug>/) */
+.plan-card { display: flex; gap: 12px; align-items: center; background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 10px; text-decoration: none; color: var(--ink); margin-bottom: 12px; }
+.plan-card img { width: 88px; height: 88px; border-radius: 12px; object-fit: cover; flex: none; }
+.plan-card b { display: block; font-size: 17px; }
+.plan-card small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
+.plan-card small.route { color: var(--brand-600); font-weight: 600; }
+.plan-cover { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); background: var(--line); display: block; }
+.stops { list-style: none; padding: 0; margin: 20px 0 0; }
+.stop { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding-bottom: 18px; position: relative; }
+.stop:not(:last-child)::before { content: ''; position: absolute; left: 13px; top: 30px; bottom: 0; width: 2px; background: var(--line); }
+.stop .num { width: 28px; height: 28px; border-radius: 50%; background: var(--brand-600); color: #fff; font-weight: 700; font-size: 14px; display: grid; place-items: center; }
+.stop .when { color: var(--brand-600); font-weight: 600; font-size: 15px; }
+.stop .note { color: var(--muted); font-size: 15px; margin-top: 6px; }
+.stop .plan-card { margin: 6px 0 0; }
