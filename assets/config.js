@@ -1,5 +1,5 @@
 // Configuración pública de la web. La anon key de Supabase es pública por diseño
-// (las apps la traen dentro); la seguridad la ponen las policies (docs/notas-backend-ios.md).
+// (las apps la traen dentro); la seguridad la ponen las policies (PLAN.md §4 del repo de la app).
 // Sin anon key, la web corre en "modo demo" con assets/demo.json.
 export const CONFIG = {
   supabaseUrl: 'https://ygxmtgmcbjduuzimeknx.supabase.co',
