@@ -226,9 +226,18 @@ export function iconButton(name, label, onclick) {
 const ua = navigator.userAgent;
 export const platform = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop';
 
+// Enlace a la App Store con su campaña (docs/medicion.md §1 del repo de la app). Un anuncio puede
+// llegar con ?c=<campaña> (minúsculas, números y guiones, máx. 40) y esa descarga se cuenta aparte.
+// No se guarda nada ni se registra la visita: el dato solo viaja en el enlace hacia Apple.
+export function appStoreLink() {
+  const c = new URLSearchParams(location.search).get('c') || '';
+  const ct = /^[a-z0-9-]{1,40}$/.test(c) ? c : CONFIG.appStoreCampaign;
+  return `${CONFIG.appStoreUrl}&ct=${ct}`;
+}
+
 export function storeButtons({ compact = false } = {}) {
   const cls = compact ? 'btn btn-primary btn-small' : 'btn btn-primary';
-  const ios = el('a', { class: cls, href: CONFIG.appStoreUrl }, 'Descargar para iPhone');
+  const ios = el('a', { class: cls, href: appStoreLink() }, 'Descargar para iPhone');
   const android = CONFIG.playStoreUrl
     ? el('a', { class: compact ? 'btn btn-ghost btn-small' : 'btn btn-ghost', href: CONFIG.playStoreUrl }, 'Descargar para Android')
     : el('span', { class: compact ? 'btn btn-ghost btn-small' : 'btn btn-ghost', 'aria-disabled': 'true' }, 'Android · muy pronto');
