@@ -227,11 +227,11 @@ const ua = navigator.userAgent;
 export const platform = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop';
 
 // Enlace a la App Store con su campaña (docs/medicion.md §1 del repo de la app). Un anuncio puede
-// llegar con ?c=<campaña> (minúsculas, números y guiones, máx. 40) y esa descarga se cuenta aparte.
+// llegar con ?c=<campaña> (minúsculas, números y guiones, máx. 30) y esa descarga se cuenta aparte.
 // No se guarda nada ni se registra la visita: el dato solo viaja en el enlace hacia Apple.
 export function appStoreLink() {
   const c = new URLSearchParams(location.search).get('c') || '';
-  const ct = /^[a-z0-9-]{1,40}$/.test(c) ? c : CONFIG.appStoreCampaign;
+  const ct = /^[a-z0-9-]{1,30}$/.test(c) ? c : CONFIG.appStoreCampaign;
   return `${CONFIG.appStoreUrl}&ct=${ct}`;
 }
 
