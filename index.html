@@ -41,7 +41,11 @@
           <span class="kicker">Ciudad de México</span>
           <h1>¿A dónde <em>vamos</em>?</h1>
           <p class="lead">Lugares curados, ordenados por el plan que tienes en mente. Cada uno te dice para qué sirve.</p>
-          <div class="store-row" id="hero-stores"></div>
+          <div class="store-row" id="hero-stores">
+            <!-- Fijo en el HTML: el botón no depende del script (docs/medicion.md §1 del repo de la app). -->
+            <a class="btn btn-primary" href="https://apps.apple.com/app/apple-store/id6758466804?pt=128499590&amp;ct=web-portada&amp;mt=8">Descargar para iPhone</a>
+            <span class="btn btn-ghost" aria-disabled="true">Android · muy pronto</span>
+          </div>
           <p class="fine">Gratis · Sin anuncios · Explora sin cuenta</p>
         </div>
         <div class="hero-card" id="hero-card" aria-live="polite"></div>
@@ -84,7 +88,11 @@
       <div class="wrap narrow">
         <h2>Descarga Itervia</h2>
         <p class="sub">Gratis para iPhone. Android llega muy pronto.</p>
-        <div class="store-row" id="bottom-stores"></div>
+        <div class="store-row" id="bottom-stores">
+          <!-- Fijo en el HTML: el botón no depende del script (docs/medicion.md §1 del repo de la app). -->
+          <a class="btn btn-primary" href="https://apps.apple.com/app/apple-store/id6758466804?pt=128499590&amp;ct=web-portada&amp;mt=8">Descargar para iPhone</a>
+          <span class="btn btn-ghost" aria-disabled="true">Android · muy pronto</span>
+        </div>
         <div class="promise">
           <div>Sin anuncios<small>Ningún lugar paga por aparecer.</small></div>
           <div>Sin rastreo de terceros<small>Medimos la app, no a ti fuera de ella.</small></div>
@@ -110,8 +118,8 @@
     import { featuredPlaces, placeTile, gateTile, skeletonTiles, storeButtons, demoNotice } from '/assets/app.js';
     import { renderPost } from '/assets/post.js';
 
-    document.getElementById('hero-stores').append(...storeButtons());
-    document.getElementById('bottom-stores').append(...storeButtons());
+    document.getElementById('hero-stores').replaceChildren(...storeButtons());
+    document.getElementById('bottom-stores').replaceChildren(...storeButtons());
     const demo = demoNotice();
     if (demo) document.getElementById('demo-slot').append(demo);
 
