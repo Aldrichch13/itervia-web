@@ -226,13 +226,31 @@ export function iconButton(name, label, onclick) {
 const ua = navigator.userAgent;
 export const platform = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop';
 
-// Enlace a la App Store con su campaña (docs/medicion.md §1 del repo de la app). Un anuncio puede
-// llegar con ?c=<campaña> (minúsculas, números y guiones, máx. 30) y esa descarga se cuenta aparte.
+// Campaña (`ct`) según el tipo de página (docs/medicion.md §1 del repo de la app):
+// /lugar/… → web-lugar · /plan/ruta/ y /plan/<plan>/<slug>/ → web-ruta · /plan/<plan>/ → web-plan ·
+// el resto (portada y demás) → web-portada.
+export function pageCampaign(path = location.pathname) {
+  const parts = path.split('/').filter(Boolean);
+  if (parts[0] === 'lugar') return 'web-lugar';
+  if (parts[0] === 'plan') return parts[1] === 'ruta' || parts.length >= 3 ? 'web-ruta' : parts.length === 2 ? 'web-plan' : CONFIG.appStoreCampaign;
+  return CONFIG.appStoreCampaign;
+}
+
+// Enlace a la App Store con su campaña. Un anuncio puede llegar con ?c=<campaña> (minúsculas,
+// números y guiones, máx. 30) y esa descarga se cuenta aparte; si no, va el `ct` del tipo de página.
 // No se guarda nada ni se registra la visita: el dato solo viaja en el enlace hacia Apple.
-export function appStoreLink() {
-  const c = new URLSearchParams(location.search).get('c') || '';
-  const ct = /^[a-z0-9-]{1,30}$/.test(c) ? c : CONFIG.appStoreCampaign;
+export function appStoreLink(search = location.search, path = location.pathname) {
+  const c = new URLSearchParams(search).get('c') || '';
+  const ct = /^[a-z0-9-]{1,30}$/.test(c) ? c : pageCampaign(path);
   return `${CONFIG.appStoreUrl}&ct=${ct}`;
+}
+
+// El botón "Descargar" de la barra superior apunta a /#descargar (sin JS); con JS va directo a la
+// App Store con el `ct` de la página, para no perder la campaña en el salto a la portada.
+if (typeof document !== 'undefined') {
+  document.querySelectorAll('a[href="/#descargar"]').forEach(a => {
+    if (a.closest('.topbar')) a.href = appStoreLink();
+  });
 }
 
 export function storeButtons({ compact = false } = {}) {

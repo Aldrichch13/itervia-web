@@ -30,6 +30,7 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 - Sin anon key en `assets/config.js` corre en **modo demo** con `assets/demo.json` (lugares públicos de CDMX y fotos de Unsplash) y lo avisa en pantalla.
 - La frase "Ideal para… / Perfecto para…" (arranque según el id) se calcula igual que en la app (`assets/app.js`, copia de `docs/perfecto-para.md`). Si cambia la regla, cámbiala aquí también.
 - Popularidad: muestra "Guardado por N personas" solo si `saves_count ≥ 10` (o likes ≥ 10); si no, "Nuevo en Itervia". Umbral en `config.js`.
+- Campaña de descarga (`ct`): `appStoreLink()` manda `web-portada` en la portada y demás, `web-lugar` en `/lugar/…`, `web-plan` en `/plan/<plan>/` y `web-ruta` en `/plan/ruta/` y `/plan/<plan>/<slug>/`; un `?c=<ct>` de anuncio manda sobre todos. El botón *Descargar* de la barra superior (fija) va directo a la App Store con ese `ct`. Prueba: `node --test tests/campana.test.mjs`.
 - Sin analítica: el sitio no registra visitas ni clics, no usa cookies ni rastreadores.
 
 ## Publicar
