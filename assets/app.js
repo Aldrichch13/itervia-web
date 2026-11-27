@@ -1,6 +1,7 @@
 // Lógica compartida de itervia.com.mx. Sin frameworks ni dependencias.
 // Todo el texto que viene de la base se pinta con textContent / atributos, nunca como HTML.
 import { CONFIG } from './config.js';
+import { campanaFinal } from './campana.js';
 
 // ------------------------------------------------------------------ catálogos (iguales a la app)
 // Colores: texto accesible (AA) sobre su tinte, ver docs/investigacion-diseno-2026-10.md §3.3.
@@ -226,14 +227,17 @@ export function iconButton(name, label, onclick) {
 const ua = navigator.userAgent;
 export const platform = /iPhone|iPad|iPod/.test(ua) ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop';
 
-// Enlace a la App Store con su campaña (docs/medicion.md §1 del repo de la app). Un anuncio puede
-// llegar con ?c=<campaña> (minúsculas, números y guiones, máx. 30) y esa descarga se cuenta aparte.
-// No se guarda nada ni se registra la visita: el dato solo viaja en el enlace hacia Apple.
+// Enlace a la App Store con su campaña (docs/medicion.md §1 del repo de la app). Cada tipo de página
+// tiene su `ct` (web-portada, web-lugar, web-plan, web-ruta, web-perfil; ver assets/campana.js) y un
+// anuncio con ?c=<campaña> manda sobre él. No se guarda nada ni se registra la visita: el dato solo
+// viaja en el enlace hacia Apple.
 export function appStoreLink() {
-  const c = new URLSearchParams(location.search).get('c') || '';
-  const ct = /^[a-z0-9-]{1,30}$/.test(c) ? c : CONFIG.appStoreCampaign;
-  return `${CONFIG.appStoreUrl}&ct=${ct}`;
+  return `${CONFIG.appStoreUrl}&ct=${campanaFinal(location.pathname, location.search)}`;
 }
+
+// El botón "Descargar" de la barra superior vive en el HTML y apunta a /#descargar (sin campaña y
+// perdiendo ?c=): lo llevamos directo a la App Store con el `ct` de la página.
+document.querySelectorAll('.topbar a[href="/#descargar"]').forEach(a => { a.href = appStoreLink(); });
 
 export function storeButtons({ compact = false } = {}) {
   const cls = compact ? 'btn btn-primary btn-small' : 'btn btn-primary';
