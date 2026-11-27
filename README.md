@@ -30,6 +30,7 @@ Las decisiones de diseño salen de [`docs/investigacion-diseno-2026-10.md`](http
 - Sin anon key en `assets/config.js` corre en **modo demo** con `assets/demo.json` (lugares públicos de CDMX y fotos de Unsplash) y lo avisa en pantalla.
 - La frase "Ideal para… / Perfecto para…" (arranque según el id) se calcula igual que en la app (`assets/app.js`, copia de `docs/perfecto-para.md`). Si cambia la regla, cámbiala aquí también.
 - Popularidad: muestra "Guardado por N personas" solo si `saves_count ≥ 10` (o likes ≥ 10); si no, "Nuevo en Itervia". Umbral en `config.js`.
+- Enlace a la App Store: cada tipo de página manda su `ct` (`web-portada`, `web-lugar`, `web-plan`, `web-ruta`, `web-perfil`; `assets/campana.js`), incluido el botón *Descargar* de la barra superior; un `?c=` válido de un anuncio manda sobre él. Prueba: `node --test tests/campana.test.mjs`. Lista en `docs/medicion.md` del repo de la app.
 - Sin analítica: el sitio no registra visitas ni clics, no usa cookies ni rastreadores.
 
 ## Publicar
